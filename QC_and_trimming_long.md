@@ -1,6 +1,6 @@
-For the longer 2x 151 bp pair-end reads used to generate the de novo transcriptome, the code used to trim the data is different to that used for shorter paired-end reads. To see the code for the shorter paired-end reads, see the file Quality_control_and_trimming.
+For the longer 2x 151 bp pair-end reads used to generate the de novo transcriptome, the code used to trim the data is different to that used for shorter paired-end reads. To see the code for the shorter paired-end reads, see the file [Quality_control_and_trimming](https://github.com/breanariordan/triplefinRNA/main/Quality_control_and_trimming.md)
 
-Moving raw files
+# Moving raw files
 
 ```
 pwd                             # past working directory, find where you are
@@ -13,7 +13,7 @@ cd ..                           # move back to nobackup directory
 cp ../OG7591-691868150/AA*/*gz denovosourcefiles/denovorun/ # take all the files containing the letters/numbers in the asterix and copy them into the new denovorun directory
 ```
 
-Quality control
+# Quality control
 
 ```
 cd denovosourcefiles          # if you aren't already in it
@@ -35,9 +35,9 @@ cp ../QC/* ./                 # move all QC files for individual samples into Mu
 multiqc .                     # perform multiqc analysis 
 ```
 
-Trimming
-# this will use the cutadapt programme to trim low quality reads out of the files and put them into a new folder called 'Trimmed'
-# note that as this is paired-end reads R1 and R2 represent the two directional runs of the reads
+# Trimming
+this will use the cutadapt programme to trim low quality reads out of the files and put them into a new folder called 'Trimmed'
+note that as this is paired-end reads R1 and R2 represent the two directional runs of the reads
 
 ```
 pwd
