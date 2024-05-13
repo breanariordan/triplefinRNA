@@ -46,9 +46,8 @@ module load cutadapt/4.1-gimkl-2022a-Python-3.10.5    # load latest cutadapt ver
 cd run                        # go to the raw data folder
 for filename in *fastq.gz
     do
-    echo $filename
     base=$(basename ${filename} .fastq.gz)
-    cutadapt -j 4 -m 20 -q 20 -a AGATCGGAAGAG -o ../Trimmed/${base}.trimmed.fastq.gz ${filename} > ../Trimmed/${base}.log
+    cutadapt -q 20 -a AGATCGGAAGAG -o ../Trimmed/${base}.trimmed.fastq.gz ${filename} > ../Trimmed/${base}.log
     done
 cd ../MultiQC
 cp ../Trimmed/*log .          # take all the trimmed .log files
