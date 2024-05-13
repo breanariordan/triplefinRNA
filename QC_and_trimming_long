@@ -37,20 +37,21 @@ multiqc .                     # perform multiqc analysis
 
 Trimming
 # this will use the cutadapt programme to trim low quality reads out of the files and put them into a new folder called 'Trimmed'
+# note that as this is paired-end reads R1 and R2 represent the two directional runs of the reads
 
 ```
 pwd
-cd ..                         # move back to sourcefiles directory
+cd ..                         # move back to denovosourcefiles directory
 mkdir Trimmed                 # make directory 'Trimmed'
 module load cutadapt/4.1-gimkl-2022a-Python-3.10.5    # load latest cutadapt version
-cd run                        # go to the raw data folder
-for filename in *fastq.gz
+cd denovorun                  # go to the raw data folder
+for filename in *R1_001.fastq.gz
     do
     echo $filename
-    base=$(basename ${filename} .fastq.gz)
-    cutadapt -j 4 -m 20 -q 20 -a AGATCGGAAGAG -o ../Trimmed/${base}.trimmed.fastq.gz ${filename} > ../Trimmed/${base}.log
+    base=$(basename ${filename} R1_100.fastq.gz)
+    cutadapt -j 4 -m 20 -q 20 -a AGATCGGAAGAG -A AGATCGGAAGAG -o ../Trimmed/${base}R1_100.fastq.gz -p ../Trimmed/${base}R2_001.fastq.gz ${base}R1_001.fastq.gz ${base}R2_001.fastq.gz
     done
-cd ../MultiQC
-cp ../Trimmed/*log .          # take all the trimmed .log files
+cd ../MultiQC                 # return to the MultiQC folder
+cp ../Trimmed/*fastq.gz .     # take all the trimmed log files
 multiqc .                     # and run the multiqc again
 ```
