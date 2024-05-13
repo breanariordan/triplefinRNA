@@ -51,3 +51,4 @@ for filename in *fastq.gz
 cd ../MultiQC
 cp ../Trimmed/*log .          # take all the trimmed .log files
 multiqc .                     # and run the multiqc again
+```
