@@ -35,7 +35,8 @@ cp ../QC/* ./                 # move all QC files for individuals samples into M
 multiqc .                     # perform multiqc analysis 
 ```
 
-# Trimming (if fastqc and multiqc results indicate it is needed)
+# Trimming
+if fastqc and multiqc results indicate it is needed
 this will use the cutadapt programme to trim low quality reads out of the files and put them into a new folder called 'Trimmed'
 
 ```
