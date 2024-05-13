@@ -1,6 +1,6 @@
 The following code is to be utilised for shorter reads (2x 51 bp paired-end reads). For longer pair-end reads to be used for generating a denovo transcriptome, see the file QC_and_trimming_long
 
-Moving raw files
+# Moving raw files
 
 ```
 pwd                       # past working directory, find where you are
@@ -13,7 +13,7 @@ cd ..                     # move back to nobackup directory
 cp ../OG7591-691868198/AA*/*gz sourcefiles/run/ # take all the files containing the letters/numbers in the asterix and copy them into the new run directory
 ```
 
-Quality control
+# Quality control
 
 ```
 cd sourcefiles                # if you aren't already in it
@@ -35,8 +35,8 @@ cp ../QC/* ./                 # move all QC files for individuals samples into M
 multiqc .                     # perform multiqc analysis 
 ```
 
-Trimming (if fastqc and multiqc results indicate it is needed)
-# this will use the cutadapt programme to trim low quality reads out of the files and put them into a new folder called 'Trimmed'
+# Trimming (if fastqc and multiqc results indicate it is needed)
+this will use the cutadapt programme to trim low quality reads out of the files and put them into a new folder called 'Trimmed'
 
 ```
 pwd
