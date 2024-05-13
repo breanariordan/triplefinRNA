@@ -1,4 +1,4 @@
-The following code is to be utilised for shorter reads (2x 51 bp paired-end reads). For longer pair-end reads to be used for generating a denovo transcriptome, see the file https://github.com/breanariordan/triplefinRNA/blob/main/QC_and_trimming_long
+The following code is to be utilised for shorter reads (2x 51 bp paired-end reads). For longer pair-end reads to be used for generating a denovo transcriptome, see the file [QC_and_trimming_long](https://github.com/breanariordan/triplefinRNA/blob/main/QC_and_trimming_long)
 
 # Moving raw files
 
