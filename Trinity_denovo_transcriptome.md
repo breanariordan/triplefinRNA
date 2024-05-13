@@ -78,3 +78,5 @@ srun Trinity --CPU ${SLURM_CPUS_PER_TASK} --max_memory 200G \
 ```
 sbatch trinityslurmp2.sl    # send script away to be run
 ```
+
+After this, the next step is to obtain the iscountmatrix. The code for this can be found at [Obtaining_iscount_matrix](https://github.com/breanariordan/triplefinRNA/main/Obtaining_iscount_matrix.md)
