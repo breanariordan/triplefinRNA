@@ -1,5 +1,6 @@
 ## moving raw files
 
+```
 pwd # past working directory, find where you are
 cd OG7591-691868198 # identify/move to to directory where raw RNASeq files are
 cd ../nobackup # move back to nobackup folder
@@ -8,6 +9,8 @@ cd sourcefiles
 mkdir run # make a new directory for the raw reads
 cd .. # move back to nobackup directory
 cp ../OG7591-691868198/AA*/*gz sourcefiles/run/ # take all the files containing the letters/numbers in the asterix and copy them into the new run directory
+```
+
 
 ## quality control
 
