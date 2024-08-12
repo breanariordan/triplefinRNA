@@ -50,4 +50,5 @@ quantile(apply(dge$counts,1,sum)/10,seq(0,1,0.05)
 
 hist(apply(dge$counts,1,sum)/10, xlim = c(0,2000), breaks = 100000, main = "number of reads per gene per sample", xlab = "number of reads per sample", ylab = "frequency")
 ```
-![](
+![](DEfigures/histogramtriplefin.png)
+
