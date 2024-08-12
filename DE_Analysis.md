@@ -15,7 +15,7 @@ library("RColorBrewer")
 library(ggrepel)
 ```
 # Loading and subsetting the count data
-The raw RSEM gene count data can be accessed here [RSEM_gene_counts.txt](https://github.com/breanariordan/triplefinRNA/blob/main/samples_file.txt)
+The raw RSEM gene count data can be accessed here [RSEM_gene_counts.txt](https://github.com/breanariordan/triplefinRNA/blob/main/RSEM_gene_counts.txt)
 ``` r
 # changing column names
 original=read.csv("RSEM_gene_counts.txt", sep="", head=T)
