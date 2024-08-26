@@ -51,4 +51,65 @@ quantile(apply(dge$counts,1,sum)/10,seq(0,1,0.05)
 hist(apply(dge$counts,1,sum)/10, xlim = c(0,2000), breaks = 100000, main = "number of reads per gene per sample", xlab = "number of reads per sample", ylab = "frequency")
 ```
 ![](DEfigures/histogramtriplefin.png)
+``` r
+# look at the most expressed genes
+which(apply(dge$counts,1,sum)/10>1e5
+```
+# Performing the DE analysis
+``` r
+logCPM <- cpm(dge, log=TRUE)
+design <- model.matrix(~sampleslapbrain$treatment)
 
+v <- voom(dge, design, plot=TRUE, normalize="quantile")
+```
+![](DEfigures/voom.png)
+``` r
+# visualising clustering of samples
+dev.off()
+plotMDS(v, pch = 19, col = rep(c( "#377EB8","#E41A1C"), each = 5), cex = 2, frame = F, main = "", cex.axis = 1)
+legend(x=-2.3, y=2.4, legend = c("10", "22"), col = c("#377EB8","#E41A1C"), pch = 19, cex = 0.7, title = "Temperature treatment (°C)")
+```
+![](DEfigures/MDS.png)
+``` r
+# over/ underexpressed gene counts
+
+fit <- lmFit(v, design)
+fit <- eBayes(fit, trend=TRUE)
+results <- topTable(fit, coef=ncol(design),n=Inf)
+
+sum(results$adj.P.Val<0.05)
+
+DE_results <- results[results$adj.P.Val<0.05,]
+DE_counts<-dge[which(rownames(dge)%in%rownames(results)),]$counts
+
+#Also take account logFC
+
+DEdown<-DE_results[which(DE_results$logFC<(-1)),]
+DEup<-DE_results[which(DE_results$logFC>(1)),]
+DE_results<-rbind(DEdown,DEup)
+```
+# Creating the figures
+``` r
+# volcano plot
+
+results <- results %>%  mutate(
+  Expression = case_when(logFC >= 1 & adj.P.Val <= 0.05 ~ "Up-regulated",
+  logFC <= -1 & adj.P.Val <= 0.05 ~ "Down-regulated",
+  TRUE ~ "Unchanged"))
+
+ggvolcano <- ggplot(results, aes(logFC,-log10(adj.P.Val))) +
+  geom_point(aes(color = Expression), size = 3/5) +
+  scale_color_manual(values = c(  "#E41A1C","gray50","#377EB8")) +
+  theme_minimal() + theme(legend.text=element_text(size=6)) +
+  xlab(expression("log"[2]*"FC")) + 
+  ylim(0,6.5) +
+  xlim(-8,8) +
+  ylab(expression("-log"[10]*"FDR")) +
+  guides(colour = guide_legend(override.aes = list(size=6),legend.key.size=6,title="")) 
+
+ggvolcano
+```
+PICTURE
+# Creating tables for Gene Ontology analyses
+
+``` r
