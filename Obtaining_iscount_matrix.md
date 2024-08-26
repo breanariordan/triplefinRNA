@@ -109,8 +109,8 @@ The next step, merging the same into a single matrix, is done in R Studio
 library("tximport")
 files <- dir()
 txi_rsem <- tximport(files, type = "rsem", txIn = FALSE, txOut = FALSE)
-head(txi-rsem$counts)
-colnames(txi.rsem$counts) <- gsub(".txt","",files)
-head(txi.rsem$counts)
-write.table(txi.rsem$counts, "RSEM_gene_counts.txt", row.names=T, col.names=T, sep="\t")
+head(txi_rsem$counts)
+colnames(txi_rsem$counts) <- gsub(".txt","",files)
+head(txi_rsem$counts)
+write.table(txi_rsem$counts, "RSEM_gene_counts.txt", row.names=T, col.names=T, sep="\t")
 ```
