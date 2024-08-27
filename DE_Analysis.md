@@ -125,12 +125,12 @@ write.csv(final_results_DE, "lapbrain_DE_results.csv", row.names = T, col.names 
 write(rownames(DE_results), "GOlapbrainallDE.txt", sep="n")
 
 write.table(rownames(DE_results) [which(DE_results$logFC>0)], "GOlapbrain_upregulated.txt", row.names=F, col.names=F, quote=F)
-write.table(rownames(DE_results [which(DE_results$logFC<0)], "GOlbraindownregulated.txt", row.names=F, col.names=F, quote=F)
+write.table(rownames(DE_results [which(DE_results$logFC<0)], "GOlapbrain_downregulated.txt", row.names=F, col.names=F, quote=F)
 
-write(rownames(dge$counts), "GOlbrainbackground.txt", sep="\n")
-write(rownames(dge$counts)[-which(rownames(dge$counts)%in%rownames(DE_results))], "GOlbrainbackgroundnooverlap.txt", sep="n")
+write(rownames(dge$counts), "GOlapbrain_background.txt", sep="\n")
+write(rownames(dge$counts)[-which(rownames(dge$counts)%in%rownames(DE_results))], "GOla-brain_background_no_overlap.txt", sep="n")
 
 final_results<-merge(results, dge$counts, by=0)
 colnames(final_results)[1]<-"GeneID"
-write.table(final_results, "lbrainALLgenes_results.txt", row.names=T, col.names=T, sep="\t")
+write.table(final_results, "lapbrain_ALLgenes_results.txt", row.names=T, col.names=T, sep="\t")
 ```
