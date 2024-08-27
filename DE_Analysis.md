@@ -109,7 +109,8 @@ ggvolcano <- ggplot(results, aes(logFC,-log10(adj.P.Val))) +
 
 ggvolcano
 ```
-PICTURE
+![](DEfigures/volcanolbrain.png)
+
 # Creating tables for Gene Ontology analyses
 
 ``` r
