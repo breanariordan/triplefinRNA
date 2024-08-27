@@ -86,27 +86,15 @@ srun blastp -query RF_trinity_output.Trinity.fasta.transdecoder.pep -db uniprot_
 sbatch blastp.sl    # submit slurm script
 ```
 
-## PFAM
-
-```
-nano pfam.sl
-```
-```
-**TO ADD**
-```
-```
-sbatch pfam.sl
-```
-
 # Loading the SQLite database
 
 ```
 module load Trinotate/3.2.2-GCC-9.2.0
+
 Trinotate Trinotate.sqlite init \ --gene_trans_map RF_trinity_output.Trinity.fasta.gene_trans_map --transcript_fasta RF_trinity_output.Trinity.fasta --transdecoder_pep RF_trinity_output.Trinity.fasta.transdecoder.pep
 
 Trinotate Trinotate.sqlite LOAD_swissprot_blastx blastx.outfmt6
 Trinotate Trinotate.sqlite LOAD_swissprot_blastp blastp.outfmt6
-Trinotate Trinotate.sqlite LOAD_pfam PFAM.out
 
 Trinotate Trinotate.sqlite report > Trinotate.xls
 ```
@@ -119,3 +107,63 @@ source activate transdecoder
 /opt/nesi/CS400_bdw/Trinity/2.14.0/trinityrnaseq/util/extract_GO_assignments_from_Trinotate.xls.pl --gene --Trinotate_xls Trinotate.xls -G --include_ancestral_terms > go_annotations.txt
 conda deactivate
 ```
+# Extract gene lengths for samples
+```
+/opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022b/trinityrnaseq-Trinity-v2.14.0/util/misc/fasta_seq_length.pl RF_trinity_output.Trinity.fasta > Trinity.fasta.seq_lens
+```
+# Aligning samples using salmon 
+This line of code specifically works to generate a matrix of gene abundance estimates for all of the samples
+```
+/opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022a/trinityrnaseq-v2.14.0/util/align_and_estimate_abundance.pl --transcripts RF_trinity_output.Trinity.fasta --seqType fq --samples_file samples_file.txt --est_method salmon --trinity_mode --prep_reference > salmon_align_and_estimate_abundance.log 2>&1 &
+
+/opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022a/trinityrnaseq-v2.14.0/util/abundance_estimates_to_matrix.pl \
+> --est_method salmon \
+> --name_sample_by_basedir \
+> --gene_trans_map none \
+> 10L1brain/quant.sf \
+> 10L1heart/quant.sf \
+> 10L2brain/quant.sf \
+> 10L2heart/quant.sf \
+> 10L3brain/quant.sf \
+> 10L3heart/quant.sf \
+> 10L4brain/quant.sf \
+> 10L4heart/quant.sf \
+> 10L5brain/quant.sf \
+> 10L5heart/quant.sf \
+> 10N1brain/quant.sf \
+> 10N1heart/quant.sf \
+> 10N2brain/quant.sf \
+> 10N2heart/quant.sf \
+> 10N3brain/quant.sf \
+> 10N3heart/quant.sf \
+> 10N4brain/quant.sf \
+> 10N4heart/quant.sf \
+> 10N5brain/quant.sf \
+> 10N5heart/quant.sf \
+> 22L1brain/quant.sf \
+> 22L1heart/quant.sf \
+> 22L2brain/quant.sf \
+> 22L2heart/quant.sf \
+> 22L3brain/quant.sf \
+> 22L3heart/quant.sf \
+> 22L4brain/quant.sf \
+> 22L4heart/quant.sf \
+> 22L5brain/quant.sf \
+> 22L5heart/quant.sf \
+> 22N1brain/quant.sf \
+> 22N1heart/quant.sf \
+> 22N2brain/quant.sf \
+> 22N2heart/quant.sf \
+> 22N3brain/quant.sf \
+> 22N3heart/quant.sf \
+> 22N4brain/quant.sf \
+> 22N4heart/quant.sf \
+> 22N5brain/quant.sf \
+> 22N5heart/quant.sf
+```
+# Incorporating gene lengths into the matrix
+```
+/opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022a/trinityrnaseq-v2.14.0/util/misc/TPM_weighted_gene_length.py --gene_trans_map RF_trinity_output.Trinity.fasta.gene_trans_map --trans_lengths Trinity.fasta.seq_lens --TPM_matrix salmon.isoform.TMM.EXPR.matrix > Trinity.gene_lengths.txt
+```
+# Factor labelling using DE genes
+**
