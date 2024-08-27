@@ -113,3 +113,23 @@ PICTURE
 # Creating tables for Gene Ontology analyses
 
 ``` r
+# Printing DE results
+
+final_results_DE <- merge(DE_results, DE_counts, by=0)
+colnames(final_results_DE)[1] <- "GeneID"
+write.csv(final_results_DE, "lapbrain_DE_results.csv", row.names = T, col.names = T)
+
+# GO writing
+
+write(rownames(DE_results), "GOlapbrainallDE.txt", sep="n")
+
+write.table(rownames(DE_results) [which(DE_results$logFC>0)], "GOlapbrain_upregulated.txt", row.names=F, col.names=F, quote=F)
+write.table(rownames(DE_results [which(DE_results$logFC<0)], "GOlbraindownregulated.txt", row.names=F, col.names=F, quote=F)
+
+write(rownames(dge$counts), "GOlbrainbackground.txt", sep="\n")
+write(rownames(dge$counts)[-which(rownames(dge$counts)%in%rownames(DE_results))], "GOlbrainbackgroundnooverlap.txt", sep="n")
+
+final_results<-merge(results, dge$counts, by=0)
+colnames(final_results)[1]<-"GeneID"
+write.table(final_results, "lbrainALLgenes_results.txt", row.names=T, col.names=T, sep="\t")
+```
