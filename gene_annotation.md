@@ -166,4 +166,39 @@ This line of code specifically works to generate a matrix of gene abundance esti
 /opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022a/trinityrnaseq-v2.14.0/util/misc/TPM_weighted_gene_length.py --gene_trans_map RF_trinity_output.Trinity.fasta.gene_trans_map --trans_lengths Trinity.fasta.seq_lens --TPM_matrix salmon.isoform.TMM.EXPR.matrix > Trinity.gene_lengths.txt
 ```
 # Factor labelling using DE genes
-**
+***Note***, the DE files you require for the following steps are generated in [DE_Analysis](https://github.com/breanariordan/triplefinRNA/blob/main/DE_Analysis.md). This step is performed separately for the two species with files put into separate folders created for _F. nigripenne_ and _F. lapillum_. **This example is for the lapillum brain samples**. 
+```
+wc -l lapbrain_DE_results.txt
+cut -f 1 lapbrain_DE_results.txt | tail -n 7616 | awk '{print "diff\t",$0}' | sed -s 's/\"//g' > factor_labelinglapbrain.txt
+```
+Download the relevant modules and packages
+```
+module load Miniconda3
+
+conda install -c bioconda bioconductor-goseq
+
+module load R
+
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install(version = "3.16", lib="/home/riobr412/R/gimkl-2022a/4.2")
+
+BiocManager::install("qvalue", lib="/home/riobr412/R/gimkl-2022a/4.2", force = TRUE)
+BiocManager::install("goseq", lib="/home/riobr412/R/gimkl-2022a/4.2", force = TRUE)
+```
+Perform all factor labelling. I moved all generated files into the folder of the designated species.
+```
+/opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022a/trinityrnaseq-v2.14.0/Analysis/DifferentialExpression/run_GOseq.pl --factor_labeling DE_files/lapbrain/factor_labelinglapbrain.txt --GO_assignments go_annotations.txt --lengths Trinity.gene_lengths.txt --background DE_files/lapbrain/GOlapbrain_background.txt
+
+# Upregulated genes
+
+cat ~/nobackup/denovosourcefiles/scheduler/DE_files/lapbrain/GOlapbrain_upregulated.txt |  awk '{print "diff\t",$0}' > factor_labelingupregulated.txt
+
+/opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022a/trinityrnaseq-v2.14.0/Analysis/DifferentialExpression/run_GOseq.pl --factor_labeling DE_files/lapbrain/factor_labelingupregulated.txt --GO_assignments go_annotations.txt --lengths Trinity.gene_lengths.txt --background DE_files/lapbrain/GOlapbrain_background.txt
+
+# Downregulated genes
+
+cat ~/nobackup/denovosourcefiles/scheduler/DE_files/lapbrain/GOlapbrain_downregulated.txt |  awk '{print "diff\t",$0}' > factor_labelingdownregulated.txt
+
+/opt/nesi/CS400_centos7_bdw/Trinity/2.14.0-gimkl-2022a/trinityrnaseq-v2.14.0/Analysis/DifferentialExpression/run_GOseq.pl --factor_labeling DE_files/lapbrain/factor_labelingdownregulated.txt --GO_assignments go_annotations.txt --lengths Trinity.gene_lengths.txt --background DE_files/lapbrain/GOlapbrain_background.txt
+```
