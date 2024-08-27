@@ -1,4 +1,4 @@
-For the longer 2x 151 bp pair-end reads used to generate the de novo transcriptome, the code used to trim the data is different to that used for shorter paired-end reads. To see the code for the shorter paired-end reads, see the file [Quality_control_and_trimming](https://github.com/breanariordan/triplefinRNA/main/Quality_control_and_trimming.md)
+For the longer 2x 151 bp pair-end reads used to generate the de novo transcriptome, the code used to trim the data is different to that used for shorter paired-end reads. To see the code for the shorter paired-end reads, see the file [Quality_control_and_trimming](https://github.com/breanariordan/triplefinRNA/blob/main/Quality_control_and_trimming.md)
 
 # Moving raw files
 
