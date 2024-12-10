@@ -104,7 +104,7 @@ Trinotate Trinotate.sqlite report > Trinotate.xls
 ```
 module load Miniconda3
 source activate transdecoder
-/opt/nesi/CS400_bdw/Trinity/2.14.0/trinityrnaseq/util/extract_GO_assignments_from_Trinotate.xls.pl --gene --Trinotate_xls Trinotate.xls -G --include_ancestral_terms > go_annotations.txt
+/opt/nesi/CS400_centos7_bdw/Trinotate/3.2.2-GCC-9.2.0/util/extract_GO_assignments_from_Trinotate.xls.pl --gene --Trinotate_xls Trinotate.xls -G --include_ancestral_terms > go_annotations.txt
 conda deactivate
 ```
 # Extract gene lengths for samples
