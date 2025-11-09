@@ -1,4 +1,6 @@
 10L1brain  10L1brain  ../../sourcefiles/Trimmed/10_L1_brain.fastq
+10L1heart  10L1heart  ../../sourcefiles/Trimmed/10_L1_heart.fastq
+10L2brain  10L2brain  ../../sourcefiles/Trimmed/10_L2_brain.fastq
 10L2heart  10L2heart  ../../sourcefiles/Trimmed/10_L2_heart.fastq
 10L3brain  10L3brain  ../../sourcefiles/Trimmed/10_L3_brain.fastq
 10L3heart  10L3heart  ../../sourcefiles/Trimmed/10_L3_heart.fastq
